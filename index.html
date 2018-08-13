@@ -2,33 +2,36 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>CodersLab</title>
+    <title>Make it happen! - personal 'to do' lists</title>
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700&amp;subset=latin-ext" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
     <script src="js/app.js"></script>
 </head>
 <body>
-
-<input id="taskInput" placeholder="Place your task here"><br>
-<button id="addTaskButton">Add task</button>
-
+    <div class="cont">
+        <div class="infoIn">
+            <input id="taskInput" placeholder="What's your task?"><br>
+            <input id="taskDate" type="date">
+            <input id="taskPriority" placeholder="Priority (1-10)"><br>
+            <button id="addTaskButton">Add task</button>
+        </div>
 <!-- additional task
 Tasks to finish: <span id="counter"></span>
--->
-
-<ul id="taskList">
-        <!--- <li>
-            <h1>Task 1</h1>
-            <button>Delete</button>
-            <button>Complete</button>
-        </li>
-        <li class="done">
-            <h1>Task 2</h1>
-            <button>Delete</button>
-            <button>Complete</button>
-        </li> --->
-</ul>
-
-<button id="removeFinishedTasksButton">Remove finished tasks</button>
-
+-->     <div class="infoOut">
+            <ul id="taskList">
+            <li>
+            <h1>Make a pie</h1>
+            <button class="deleteButton">Delete</button>
+            <button class="completeButton">Complete</button>
+            </li>
+                    <li class="done">
+                        <h1>Task 2</h1>
+                        <button>Delete</button>
+                        <button>Complete</button>
+                    </li>
+            </ul>
+            <button id="removeFinishedTasksButton">Remove finished tasks</button>
+        </div>
+    </div>
 </body>
 </html>

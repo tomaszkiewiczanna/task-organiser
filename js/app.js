@@ -1,28 +1,29 @@
 document.addEventListener('DOMContentLoaded', function () {
     var button = document.querySelector('#addTaskButton');
+    document.querySelector("#taskDate").valueAsDate = new Date();
 
-    //licznik zadań część 1
-    var body = document.querySelector('body');
+    //licznik zadań część 1 - dodanie do strony
+    var infoIn = document.querySelector('.infoIn');
     var counterSpan = document.createElement("span");
     counterSpan.setAttribute('id', 'counter');
-    body.insertBefore(counterSpan, body.children[3]);
-    counterSpan.innerHTML = 'Tasks to finish: <span id="counterNumb">0</span>';
+    infoIn.insertBefore(counterSpan, infoIn.children[5]);
+    counterSpan.innerHTML = '<br>Tasks to finish: <span id="counterNumb">0</span>';
+
 
     button.addEventListener('click', function () {
         var taskInput = document.querySelector('#taskInput');
         var taskListUl = document.querySelector('#taskList');
-        var newTaskLi = document.createElement('li');
-
-        if (taskInput.value.length <= 4 || taskInput.value.length >= 101) {
-            alert('Task description must be between 5 - 100 letters!');
+        if (taskInput.value.length <= 1 || taskInput.value.length >= 101) {
+            alert('Task description must be between 1 - 100 letters!');
         } else {
 
-            //tworzy nowy li
+            //tworzy nowe zadanie
+            var newTaskLi = document.createElement('li');
             taskListUl.appendChild(newTaskLi);
             newTaskLi.innerHTML = '<h1>' + taskInput.value + '</h1><button class="deleteButton">Delete</button><button class="completeButton">Complete</button>';
             taskInput.value = "";
 
-            //licznik zadań część 2
+            //licznik zadań część 2 - aktualizacja przy nowym zadaniu
             var counterNumb =document.querySelector('#counterNumb');
             counterNumb.innerText = parseInt(counterNumb.innerText,10) + 1;
 
@@ -32,7 +33,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 newTaskLi.parentElement.removeChild(newTaskLi);
             })
 
-            //dodawanie zadania
+            //dodawanie statusu ukończenia zadania
             var completeButton = newTaskLi.lastChild;
             completeButton.addEventListener('click', function () {
                 if (newTaskLi.className.indexOf("completed") === -1) {
@@ -42,16 +43,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
             })
 
-            //usuwanie zrobionych zadań
-            var removeFinished = document.querySelector('#removeFinishedTasksButton');
-            removeFinished.addEventListener('click', function () {
-                var completedTasks = document.querySelectorAll('.completed');
-                for (var i = 0; i < completedTasks.length; i++) {
-                    completedTasks[i].parentElement.removeChild(completedTasks[i]);
-                }
-            })
-
-            //licznik zadań część 3
+            //licznik zadań część 3 - przy wykonaniu zadania
             var completeButtons = document.querySelectorAll('.completeButton');
 
             for (var i=0; i<completeButtons.length; i++){
@@ -64,6 +56,17 @@ document.addEventListener('DOMContentLoaded', function () {
                     counterNumb.innerText = notMade;
                 })
             }
+
+            //usuwanie zrobionych zadań
+            var removeFinished = document.querySelector('#removeFinishedTasksButton');
+            removeFinished.addEventListener('click', function () {
+                var completedTasks = document.querySelectorAll('.completed');
+                for (var i = 0; i < completedTasks.length; i++) {
+                    completedTasks[i].parentElement.removeChild(completedTasks[i]);
+                }
+            })
+
+
 
 
 
