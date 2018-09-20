@@ -2,36 +2,48 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Make it happen! - personal 'to do' lists</title>
-    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700&amp;subset=latin-ext" rel="stylesheet">
+    <title>Life organiser</title>
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700&amp;subset=latin-ext"
+          rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
     <script src="js/app.js"></script>
 </head>
 <body>
-    <div class="cont">
+    <nav class="task-nav">
+        <div class="task-nav-logo">
+            <a href="#" class="task-nav-logo-link">
+                LO<br>
+            </a>
+        </div>
+    </nav>
+    <section class="task-container">
         <div class="infoIn">
-            <input id="taskInput" placeholder="What's your task?"><br>
-            <input id="taskDate" type="date">
-            <input id="taskPriority" placeholder="Priority (1-10)"><br>
-            <button id="addTaskButton">Add task</button>
+            <input id="infoIn-taskInput" placeholder="What's your task?"><br>
+            <input id="infoIn-taskDate" type="date">
+            <input id="infoIn-taskPriority" placeholder="Priority (1-10)"><br>
+            <button id="infoIn-addTaskButton">Add task</button>
         </div>
-<!-- additional task
-Tasks to finish: <span id="counter"></span>
--->     <div class="infoOut">
-            <ul id="taskList">
-            <li>
-            <h1>Make a pie</h1>
-            <button class="deleteButton">Delete</button>
-            <button class="completeButton">Complete</button>
-            </li>
-                    <li class="done">
-                        <h1>Task 2</h1>
-                        <button>Delete</button>
-                        <button>Complete</button>
-                    </li>
+        <div class="infoOut">
+            <ul id="infoOut-taskList">
+                <li>
+                    <h1>Make a pie</h1>
+                    <button class="deleteButton">Delete</button>
+                    <button class="completeButton">Complete</button>
+                </li>
+                <li class="done">
+                    <h1>Task 2</h1>
+                    <button>Delete</button>
+                    <button>Complete</button>
+                </li>
             </ul>
-            <button id="removeFinishedTasksButton">Remove finished tasks</button>
+            <button id="infoOut-removeFinishedTasksButton">Remove finished tasks</button>
         </div>
-    </div>
+    </section>
+    <footer class="task-footer">
+        <div class="task-footer-cred">
+            Photo taken by<br>
+            bla bla bla
+        </div>
+    </footer>
 </body>
 </html>

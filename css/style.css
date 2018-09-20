@@ -1,37 +1,53 @@
-body {
-    margin: 0px;
+*{
+    margin: 0;
+    padding: 0;
     box-sizing: border-box;
-    font-family: 'Source Sans Pro', sans-serif;
 }
-.cont {
-    background: #eeeeee;
-    width: 450px;
-    height: 400px;
-    margin: 150px auto 10px auto;
+body {
+    font-family: 'Source Sans Pro', sans-serif;
+    background: url(../images/tropical.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+.task-nav{
+    height: 60px;
+    margin: 15px;
     position: relative;
+}
+.task-nav-logo-link{
+    width: 50px;
+    height: 50px;
+    border: 1px solid white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    font-size: 30px;
+    color: white;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+.task-container {
+    width: 50%;
+    margin: 0 auto;
+    height: 400px;
+}
+.infoIn {
+    background: rgba(0,0,0,0.3);
     text-align: center;
-    border-radius: 20px;
+    border-radius: 3px;
     -webkit-box-shadow: -6px 20px 50px -8px rgba(0,0,0,0.09);
     -moz-box-shadow: -6px 20px 50px -8px rgba(0,0,0,0.09);
     box-shadow: -6px 20px 50px -8px rgba(0,0,0,0.09);
-    border: 1px solid #ececec;
-}
-.infoIn {
-    border-bottom: 1px dashed #39383b;
     margin: 10px;
-    width: auto;
+
 }
-.infoOut{
-    margin: 10px;
-    width: auto;
-    background: indianred;
-}
-#taskInput,
-#taskDate,
-#taskPriority {
+#infoIn-taskInput,
+#infoIn-taskDate,
+#infoIn-taskPriority {
     text-align: center;
     border: 2px solid #39383b;
-    background: transparent;
     color: #39383b;
     font-weight: 600;
     height: 25px;
@@ -40,17 +56,17 @@ body {
     text-transform: uppercase;
     letter-spacing: 2px;
 }
-#taskInput{
+#infoIn-taskInput{
     width: 80%;
 }
-#taskDate,
-#taskPriority {
+#infoIn-taskDate,
+#infoIn-taskPriority {
     width: 35%;
 }
-#taskDate{
+#infoIn-taskDate{
     margin-right: 17px;
 }
-#taskPriority{
+#infoIn-taskPriority{
     margin-left: 18px;
 }
 input:focus {
@@ -60,7 +76,7 @@ input[type="date"]::-webkit-clear-button {
     display: none;
 }
 input[type="date"]::-webkit-calendar-picker-indicator {
-    color: #2c3e50;
+    color: #375050;
 }
 input[type="date"]::-webkit-inner-spin-button {
     display: none;
@@ -85,10 +101,29 @@ button:focus {
 }
 button:hover{
     cursor: pointer;
-    color: yellow;
+    color: #22634f;
 }
-#addTaskButton,
-#removeFinishedTasksButton {
+.infoOut{
+    margin: 10px;
+    width: auto;
+    height: 75%;
+    text-align: center;
+}
+#infoOut-taskList{
+    list-style-type: none;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+#infoOut-taskList li{
+    width: 80%;
+    margin: 15px 0;
+    background: white;
+    border-radius: 4px;
+}
+
+#infoIn-addTaskButton,
+#infoOut-removeFinishedTasksButton {
     width: 80%;
 }
 .completed h1{
@@ -98,4 +133,18 @@ button:hover{
 #counter {
     display: block;
     position: absolute;
+}
+.task-footer{
+    height: 70px;
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+}
+.task-footer-cred{
+    text-align: right;
+    font-size: 30px;
+    color: rgba(255,255,255,0.9);
+    font-weight: 700;
+    text-transform: uppercase;
 }
