@@ -1,8 +1,9 @@
-*{
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
+
 body {
     font-family: 'Source Sans Pro', sans-serif;
     background: url(../images/tropical.jpg);
@@ -10,12 +11,13 @@ body {
     background-size: cover;
     background-position: center;
 }
-.task-nav{
+.task-nav {
     height: 60px;
     margin: 15px;
     position: relative;
 }
-.task-nav-logo-link{
+
+.task-nav-logo-link {
     width: 50px;
     height: 50px;
     border: 1px solid white;
@@ -27,22 +29,33 @@ body {
     color: white;
     font-weight: 700;
     text-transform: uppercase;
+    -webkit-box-shadow: 0 0 49px 14px rgba(0, 0, 0, 0.5);
+    -moz-box-shadow: 0 0 49px 14px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 0 49px 14px rgba(0, 0, 0, 0.5);
+    transition: 0.4s;
 }
+
+.task-nav-logo-link:hover {
+    color: #989898;
+    border: 1px solid #989898;
+}
+
 .task-container {
-    width: 50%;
+    width: 30%;
     margin: 0 auto;
     height: 400px;
 }
+
 .infoIn {
-    background: rgba(0,0,0,0.3);
+    background: rgba(0, 0, 0, 0.5);
     text-align: center;
     border-radius: 3px;
-    -webkit-box-shadow: -6px 20px 50px -8px rgba(0,0,0,0.09);
-    -moz-box-shadow: -6px 20px 50px -8px rgba(0,0,0,0.09);
-    box-shadow: -6px 20px 50px -8px rgba(0,0,0,0.09);
+    -webkit-box-shadow: -6px 20px 50px -8px rgba(0, 0, 0, 0.09);
+    -moz-box-shadow: -6px 20px 50px -8px rgba(0, 0, 0, 0.09);
+    box-shadow: -6px 20px 50px -8px rgba(0, 0, 0, 0.09);
     margin: 10px;
-
 }
+
 #infoIn-taskInput,
 #infoIn-taskDate,
 #infoIn-taskPriority {
@@ -56,95 +69,139 @@ body {
     text-transform: uppercase;
     letter-spacing: 2px;
 }
-#infoIn-taskInput{
-    width: 80%;
+
+#infoIn-taskInput {
+    width: 95%;
 }
+
 #infoIn-taskDate,
 #infoIn-taskPriority {
-    width: 35%;
+    width: 40%;
 }
-#infoIn-taskDate{
+
+#infoIn-taskDate {
     margin-right: 17px;
 }
-#infoIn-taskPriority{
+
+#infoIn-taskPriority {
     margin-left: 18px;
 }
+
 input:focus {
     outline: none;
 }
+
 input[type="date"]::-webkit-clear-button {
     display: none;
 }
+
 input[type="date"]::-webkit-calendar-picker-indicator {
     color: #375050;
 }
+
 input[type="date"]::-webkit-inner-spin-button {
     display: none;
 }
+
 ::placeholder {
     color: #4c4b4f;
 }
+
 button {
     background: #39383b;
     color: #eeeeee;
-    width: 75px;
-    height: 30px;
+    width: 110px;
+    height: 28px;
     border: none;
     font-weight: 500;
     text-transform: uppercase;
     margin: 8px;
     letter-spacing: 2px;
-    transition: 0.6s;
+    transition: 0.4s;
+    border-radius: 2px;
 }
+
 button:focus {
     outline: none;
 }
-button:hover{
+
+button:hover {
     cursor: pointer;
     color: #22634f;
 }
-.infoOut{
+
+.infoOut {
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 5px;
     margin: 10px;
     width: auto;
-    height: 75%;
+    height: 250px;
     text-align: center;
+    overflow-y: scroll;
 }
-#infoOut-taskList{
+.infoOut::-webkit-scrollbar {
+    width: 5px;
+    background: transparent;
+}
+.infoOut::-webkit-scrollbar-thumb {
+    background: #fff;
+    height: 5px;
+    border-radius: 50px;
+}
+
+.infoOut::-webkit-scrollbar-track {
+    background: transparent;
+    border-radius: 100px;
+}
+#infoOut-taskList {
     list-style-type: none;
     display: flex;
     align-items: center;
     flex-direction: column;
 }
-#infoOut-taskList li{
-    width: 80%;
+
+#infoOut-taskList li {
+    width: 95%;
     margin: 15px 0;
     background: white;
-    border-radius: 4px;
+    border-radius: 3px;
+    border: 1.5px solid black;
 }
 
 #infoIn-addTaskButton,
 #infoOut-removeFinishedTasksButton {
-    width: 80%;
+    width: 95%;
 }
-.completed h1{
+
+.completed h1 {
     color: #39383b;
     text-decoration: line-through;
 }
+
 #counter {
     display: block;
     position: absolute;
 }
-.task-footer{
-    height: 70px;
+
+.task-footer {
     width: 100%;
     display: flex;
     justify-content: flex-end;
     align-items: flex-end;
+    padding: 0 20px 10px 0;
 }
-.task-footer-cred{
+
+.task-footer-cred {
+    width: 200px;
     text-align: right;
     font-size: 30px;
-    color: rgba(255,255,255,0.9);
+    color: rgba(255, 255, 255, 0.9);
     font-weight: 700;
     text-transform: uppercase;
+    display: flex;
+    flex-direction: column;
+}
+.task-footer-cred a{
+    text-decoration: none;
+    color: white;
 }
