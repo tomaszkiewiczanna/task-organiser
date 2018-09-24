@@ -165,7 +165,17 @@ button:hover {
     margin: 15px 0;
     background: white;
     border-radius: 3px;
-    border: 1.5px solid black;
+    border: 1.5px solid #000;
+    position: relative;
+}
+.infoOut-taskList-li-square{
+    position: absolute;
+    left: 15px;
+    top: 10px;
+    display: block;
+    width: 10px;
+    height: 75%;
+    background: #ff5024;
 }
 
 #infoIn-addTaskButton,
@@ -178,9 +188,15 @@ button:hover {
     text-decoration: line-through;
 }
 
-#counter {
-    display: block;
-    position: absolute;
+#task-counter {
+    background: rgba(0,0,0,0.25);
+    margin: 6px 0;
+    text-align: center;
+    color: #fff;
+    font-weight: 600;
+    line-height: 25px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
 }
 
 .task-footer {

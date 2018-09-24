@@ -2,17 +2,17 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Life organiser</title>
+    <title>Task organiser</title>
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700&amp;subset=latin-ext"
           rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
-    <script src="js/app.js"></script>
+    <script src="js/out.js"></script>
 </head>
 <body>
     <nav class="task-nav">
         <div class="task-nav-logo">
             <a href="#" class="task-nav-logo-link">
-                LO<br>
+                TO<br>
             </a>
         </div>
     </nav>
@@ -20,31 +20,31 @@
         <div class="infoIn">
             <input id="infoIn-taskInput" placeholder="What's your task?"><br>
             <input id="infoIn-taskDate" type="date">
-            <input id="infoIn-taskPriority" placeholder="Priority (1-10)"><br>
+            <input id="infoIn-taskPriority" name="priority" type="number" placeholder="Priority (1-10)" min="1" max="10"><br>
             <button id="infoIn-addTaskButton">Add task</button>
         </div>
         <div class="infoOut">
             <ul id="infoOut-taskList">
-                <li>
-                    <h1>Make a pie</h1>
-                    <button class="deleteButton">Delete</button>
-                    <button class="completeButton">Complete</button>
-                </li>
-                <li>
-                    <h1>Make a pie</h1>
-                    <button class="deleteButton">Delete</button>
-                    <button class="completeButton">Complete</button>
-                </li>
-                <li>
-                    <h1>Make a pie</h1>
-                    <button class="deleteButton">Delete</button>
-                    <button class="completeButton">Complete</button>
-                </li>
-                <li class="done">
-                    <h1>Task 2</h1>
-                    <button>Delete</button>
-                    <button>Complete</button>
-                </li>
+                <!--<li>-->
+                    <!--<h1>Make a pie</h1>-->
+                    <!--<button class="deleteButton">Delete</button>-->
+                    <!--<button class="completeButton">Complete</button>-->
+                <!--</li>-->
+                <!--<li>-->
+                    <!--<h1>Make a pie</h1>-->
+                    <!--<button class="deleteButton">Delete</button>-->
+                    <!--<button class="completeButton">Complete</button>-->
+                <!--</li>-->
+                <!--<li>-->
+                    <!--<h1>Make a pie</h1>-->
+                    <!--<button class="deleteButton">Delete</button>-->
+                    <!--<button class="completeButton">Complete</button>-->
+                <!--</li>-->
+                <!--<li class="done">-->
+                    <!--<h1>Task 2</h1>-->
+                    <!--<button>Delete</button>-->
+                    <!--<button>Complete</button>-->
+                <!--</li>-->
             </ul>
             <button id="infoOut-removeFinishedTasksButton">Remove finished tasks</button>
         </div>
