@@ -183,6 +183,9 @@ button:hover {
 #infoOut-removeFinishedTasksButton {
     width: 95%;
 }
+#infoOut-removeFinishedTasksButton{
+    display: none;
+}
 
 .completed h1 {
     color: #39383b;

@@ -1,12 +1,15 @@
 document.addEventListener('DOMContentLoaded', function () {
+    //zamienne
+    const infoIn = document.querySelector('.infoIn');
     const addButton = document.querySelector('#infoIn-addTaskButton');
     let taskInput = document.querySelector('#infoIn-taskInput');
     let dateInput = document.querySelector("#infoIn-taskDate").valueAsDate = new Date();
     let priorityInput = document.querySelector("#infoIn-taskPriority");
-    const infoIn = document.querySelector('.infoIn');
-    const infoOut = document.querySelector('.infoOut');
-    let taskListUl = document.querySelector('#infoOut-taskList');
     const taskArr = [];
+
+    const infoOut = document.querySelector('.infoOut');
+    const taskListUl = document.querySelector('#infoOut-taskList');
+
     const monthNames = [
         "January", "February", "March",
         "April", "May", "June", "July",
@@ -14,18 +17,30 @@ document.addEventListener('DOMContentLoaded', function () {
         "November", "December"
     ];
     const colorsArr = [
-        "#83A57A", "#8AA56B","#AAD185","#F2EAA7","#F2F990",
+        "#83A57A", "#8AA56B", "#AAD185", "#F2EAA7", "#F2F990",
         "#F2E098", "#f2d06b", "#EAB06E", "#ff7c35", "#ff4104"
     ];
+    let finishedTasksArr = [];
 
-    //licznik zadań część 1 - dodanie do strony
+    //utworzenie licznik zadań
     const counterSpan = document.createElement("span");
     counterSpan.setAttribute('id', 'task-counter');
-    infoOut.insertBefore(counterSpan,infoOut.firstChild);
-    counterSpan.innerHTML = `You have <span id="task-counter-numb"> ${taskArr.length} </span> tasks to make.`;
+    infoOut.insertBefore(counterSpan, infoOut.firstChild);
+    counterSpan.innerHTML = `You have <span id="task-counter-numb">0</span> tasks to make.`;
 
+
+    function refreshCounter() {
+        finishedTasksArr = [];
+        taskArr.forEach((task, i) => {
+            if (task.taskDone && finishedTasksArr.indexOf(i) === -1) {
+                finishedTasksArr.push(i);
+            }
+        });
+        document.querySelector('#task-counter-numb').innerHTML = taskArr.length - finishedTasksArr.length;
+    }
+
+    //event start
     addButton.addEventListener('click', function () {
-
         if (taskInput.value.length < 1 || taskInput.value.length >= 101) {
             alert('Task description must be between 1 - 100 letters!');
         } else if (priorityInput.value === "") {
@@ -33,17 +48,24 @@ document.addEventListener('DOMContentLoaded', function () {
         }
         else {
             //obiekt zadania dodany do tablicy
-            taskArr.push({taskKey: dateInput.getTime(), taskName: taskInput.value, taskDate: dateInput, taskPriority: Number(priorityInput.value), taskDone: false});
+            taskArr.push({
+                taskKey: dateInput.getTime(),
+                taskName: taskInput.value,
+                taskDate: dateInput,
+                taskPriority: Number(priorityInput.value),
+                taskDone: false
+            });
 
             //reset formularza
             taskInput.value = "";
-            priorityInput.value ="";
+            priorityInput.value = "";
             dateInput = new Date();
+            refreshCounter();
 
-            // tworzenie li dla listy zadań
-            function refreshList(arr){
-                taskListUl.innerHTML= '';
-                arr.map(el=>{
+            // tworzenie li z tablicy zadań
+            function refreshList(arr) {
+                taskListUl.innerHTML = '';
+                arr.map(el => {
                     const newTaskLi = document.createElement('li');
                     newTaskLi.innerHTML = `
                     <span class="infoOut-taskList-li-square"></span><h1>${el.taskName}</h1><br>
@@ -53,34 +75,42 @@ document.addEventListener('DOMContentLoaded', function () {
                     `;
                     taskListUl.appendChild(newTaskLi);
                     newTaskLi.id = el.taskKey;
-                    newTaskLi.querySelector('.infoOut-taskList-li-square').style.background =  colorsArr[el.taskPriority-1];
-                    if(el.taskDone){newTaskLi.classList.add('completed')};
+                    newTaskLi.querySelector('.infoOut-taskList-li-square').style.background = colorsArr[el.taskPriority - 1];
+                    if (el.taskDone) {
+                        newTaskLi.classList.add('completed')
+                    }
+                    ;
                 })
             }
             refreshList(taskArr);
 
             //usuwanie zadania
             const deleteButtons = taskListUl.querySelectorAll(".deleteButton");
-            deleteButtons.forEach(delBtn=>{
+            deleteButtons.forEach(delBtn => {
                 delBtn.addEventListener('click', () => {
                     let indexDelete;
-                    const parentLi = this.parentElement.id;
-                    taskArr.forEach((el, i)=>{
-                        if (el.taskKey === Number(parentLi)){indexDelete = i;}
+                    const parentLi = delBtn.parentElement.id;
+                    taskArr.forEach((el, i) => {
+                        if (el.taskKey === Number(parentLi)) {
+                            indexDelete = i;
+                        }
                     });
-                    taskArr.splice(indexDelete,1);
-                    refreshList(taskArr);
+                    taskArr.splice(indexDelete, 1);
+                    delBtn.parentElement.parentElement.removeChild(delBtn.parentElement);
+                    refreshCounter();
                 })
             })
 
-            //dodaj status ukończenia zadania
-            var completeButton = taskListUl.querySelectorAll('.completeButton');
-            completeButton.forEach(compBtn =>{
+            //status ukończenia zadania
+            const completeButton = taskListUl.querySelectorAll('.completeButton');
+            completeButton.forEach(compBtn => {
                 compBtn.addEventListener('click', () => {
                     let indexComp;
                     const parentLi = compBtn.parentElement.id;
-                    taskArr.forEach((el, i)=>{
-                        if (el.taskKey === Number(parentLi)){indexComp = i;}
+                    taskArr.forEach((el, i) => {
+                        if (el.taskKey === Number(parentLi)) {
+                            indexComp = i;
+                        }
                     });
 
                     if (compBtn.parentElement.className.indexOf("completed") === -1) {
@@ -92,16 +122,18 @@ document.addEventListener('DOMContentLoaded', function () {
                         compBtn.innerText = `complited`;
                         taskArr[indexComp].taskDone = false;
                     }
+                    refreshCounter();
                 })
             })
 
             //usuwanie zrobionych zadań
-            var removeFinished = document.querySelector('#infoOut-removeFinishedTasksButton');
-            removeFinished.addEventListener('click', function () {
-                var completedTasks = document.querySelectorAll('.completed');
-                for (var i = 0; i < completedTasks.length; i++) {
-                    completedTasks[i].parentElement.removeChild(completedTasks[i]);
-                }
+            const removeFinished = document.getElementById('infoOut-removeFinishedTasksButton');
+            removeFinished.style.display = "block";
+            removeFinished.addEventListener('click', () => {
+                const completedTasks = document.querySelectorAll('.completed');
+                completedTasks.forEach(finishedLi => {
+                    finishedLi.parentElement.removeChild(finishedLi);
+                })
             })
         }
     })
