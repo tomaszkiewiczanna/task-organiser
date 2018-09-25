@@ -7,6 +7,16 @@ document.addEventListener('DOMContentLoaded', function () {
     const infoOut = document.querySelector('.infoOut');
     let taskListUl = document.querySelector('#infoOut-taskList');
     const taskArr = [];
+    const monthNames = [
+        "January", "February", "March",
+        "April", "May", "June", "July",
+        "August", "September", "October",
+        "November", "December"
+    ];
+    const colorsArr = [
+        "#83A57A", "#8AA56B","#AAD185","#F2EAA7","#F2F990",
+        "#F2E098", "#f2d06b", "#EAB06E", "#ff7c35", "#ff4104"
+    ];
 
     //licznik zadań część 1 - dodanie do strony
     const counterSpan = document.createElement("span");
@@ -23,55 +33,59 @@ document.addEventListener('DOMContentLoaded', function () {
         }
         else {
             //obiekt zadania dodany do tablicy
-            taskArr.push({taskName: taskInput.value, taskDate: dateInput, taskPriority: Number(priorityInput.value)});
-            console.log(taskArr);
+            taskArr.push({taskKey: dateInput.getTime(), taskName: taskInput.value, taskDate: dateInput, taskPriority: Number(priorityInput.value)});
 
+            //reset formularza
             taskInput.value = "";
             priorityInput.value ="";
             dateInput = new Date();
-            taskListUl.innerHTML= '';
 
-            //tworzy nowe zadanie
-            var monthNames = [
-                "January", "February", "March",
-                "April", "May", "June", "July",
-                "August", "September", "October",
-                "November", "December"
-            ];
-            taskArr.map(el=>{
-                let newTaskLi = document.createElement('li');
-                newTaskLi.innerHTML = `<span class="infoOut-taskList-li-square"></span><h1>${el.taskName}</h1><br><p>until ${el.taskDate.getDate()} ${monthNames[el.taskDate.getMonth()]} ${el.taskDate.getFullYear()}</p><button class="deleteButton">Delete</button><button class="completeButton">Complete</button>`;
-                taskListUl.appendChild(newTaskLi);
-            })
+            // tworzenie li dla listy zadań
+            function refreshList(arr){
+                taskListUl.innerHTML= '';
+                arr.map(el=>{
+                    const newTaskLi = document.createElement('li');
+                    newTaskLi.innerHTML = `<span class="infoOut-taskList-li-square"></span><h1>${el.taskName}</h1><br><p>until ${el.taskDate.getDate()} ${monthNames[el.taskDate.getMonth()]} ${el.taskDate.getFullYear()}</p><button class="deleteButton">Delete</button><button class="completeButton">Complete</button>`;
+                    taskListUl.appendChild(newTaskLi);
+                    newTaskLi.id = el.taskKey;
+                    newTaskLi.querySelector('.infoOut-taskList-li-square').style.background =  colorsArr[el.taskPriority-1];
+                })
+            }
+            refreshList(taskArr);
 
             //usuwanie zadania
-            var deleteButton = newTaskLi.querySelector(".deleteButton");
-            deleteButton.addEventListener('click', function () {
-                newTaskLi.parentElement.removeChild(newTaskLi);
+            const deleteButtons = taskListUl.querySelectorAll(".deleteButton");
+            deleteButtons.forEach(delBtn=>{
+                delBtn.addEventListener('click', () => {
+                    let indexDelete;
+                    const parentLi = delBtn.parentElement.id;
+                    taskArr.forEach((el, i)=>{
+                        if (el.taskKey === Number(parentLi)){indexDelete = i;}
+                    });
+                    taskArr.splice(indexDelete,1);
+                    refreshList(taskArr);
+                })
             })
 
             //dodawanie statusu ukończenia zadania
-            var completeButton = newTaskLi.lastChild;
+            // var completeButton = taskListUl.lastChild;
+            // completeButton.addEventListener('click', function () {
+            //     if (!newTaskLi.className.indexOf("completed")) {
+            //         newTaskLi.classList.add('completed');
+            //     } else {
+            //         newTaskLi.classList.remove('completed');
+            //     }
+            // })
 
-            completeButton.addEventListener('click', function () {
-                if (!newTaskLi.className.indexOf("completed")) {
-                    newTaskLi.classList.add('completed');
-                } else {
-                    newTaskLi.classList.remove('completed');
-                }
-            })
-
-            //licznik zadań część 3 - przy wykonaniu zadania
-            var completeButtons = document.querySelectorAll('.completeButton');
 
             //usuwanie zrobionych zadań
-            var removeFinished = document.querySelector('#infoOut-removeFinishedTasksButton');
-            removeFinished.addEventListener('click', function () {
-                var completedTasks = document.querySelectorAll('.completed');
-                for (var i = 0; i < completedTasks.length; i++) {
-                    completedTasks[i].parentElement.removeChild(completedTasks[i]);
-                }
-            })
+            // var removeFinished = document.querySelector('#infoOut-removeFinishedTasksButton');
+            // removeFinished.addEventListener('click', function () {
+            //     var completedTasks = document.querySelectorAll('.completed');
+            //     for (var i = 0; i < completedTasks.length; i++) {
+            //         completedTasks[i].parentElement.removeChild(completedTasks[i]);
+            //     }
+            // })
         }
 
 
