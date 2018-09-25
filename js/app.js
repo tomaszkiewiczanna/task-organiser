@@ -33,7 +33,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
         else {
             //obiekt zadania dodany do tablicy
-            taskArr.push({taskKey: dateInput.getTime(), taskName: taskInput.value, taskDate: dateInput, taskPriority: Number(priorityInput.value)});
+            taskArr.push({taskKey: dateInput.getTime(), taskName: taskInput.value, taskDate: dateInput, taskPriority: Number(priorityInput.value), taskDone: false});
 
             //reset formularza
             taskInput.value = "";
@@ -45,10 +45,16 @@ document.addEventListener('DOMContentLoaded', function () {
                 taskListUl.innerHTML= '';
                 arr.map(el=>{
                     const newTaskLi = document.createElement('li');
-                    newTaskLi.innerHTML = `<span class="infoOut-taskList-li-square"></span><h1>${el.taskName}</h1><br><p>until ${el.taskDate.getDate()} ${monthNames[el.taskDate.getMonth()]} ${el.taskDate.getFullYear()}</p><button class="deleteButton">Delete</button><button class="completeButton">Complete</button>`;
+                    newTaskLi.innerHTML = `
+                    <span class="infoOut-taskList-li-square"></span><h1>${el.taskName}</h1><br>
+                    <p>until ${el.taskDate.getDate()} ${monthNames[el.taskDate.getMonth()]} 
+                    ${el.taskDate.getFullYear()}</p><button class="deleteButton">Delete</button>
+                    <button class="completeButton">Completed</button>
+                    `;
                     taskListUl.appendChild(newTaskLi);
                     newTaskLi.id = el.taskKey;
                     newTaskLi.querySelector('.infoOut-taskList-li-square').style.background =  colorsArr[el.taskPriority-1];
+                    if(el.taskDone){newTaskLi.classList.add('completed')};
                 })
             }
             refreshList(taskArr);
@@ -58,7 +64,7 @@ document.addEventListener('DOMContentLoaded', function () {
             deleteButtons.forEach(delBtn=>{
                 delBtn.addEventListener('click', () => {
                     let indexDelete;
-                    const parentLi = delBtn.parentElement.id;
+                    const parentLi = this.parentElement.id;
                     taskArr.forEach((el, i)=>{
                         if (el.taskKey === Number(parentLi)){indexDelete = i;}
                     });
@@ -67,27 +73,36 @@ document.addEventListener('DOMContentLoaded', function () {
                 })
             })
 
-            //dodawanie statusu ukończenia zadania
-            // var completeButton = taskListUl.lastChild;
-            // completeButton.addEventListener('click', function () {
-            //     if (!newTaskLi.className.indexOf("completed")) {
-            //         newTaskLi.classList.add('completed');
-            //     } else {
-            //         newTaskLi.classList.remove('completed');
-            //     }
-            // })
+            //dodaj status ukończenia zadania
+            var completeButton = taskListUl.querySelectorAll('.completeButton');
+            completeButton.forEach(compBtn =>{
+                compBtn.addEventListener('click', () => {
+                    let indexComp;
+                    const parentLi = compBtn.parentElement.id;
+                    taskArr.forEach((el, i)=>{
+                        if (el.taskKey === Number(parentLi)){indexComp = i;}
+                    });
 
+                    if (compBtn.parentElement.className.indexOf("completed") === -1) {
+                        compBtn.parentElement.classList.add('completed');
+                        compBtn.innerText = `not ready`;
+                        taskArr[indexComp].taskDone = true;
+                    } else {
+                        compBtn.parentElement.classList.remove('completed');
+                        compBtn.innerText = `complited`;
+                        taskArr[indexComp].taskDone = false;
+                    }
+                })
+            })
 
             //usuwanie zrobionych zadań
-            // var removeFinished = document.querySelector('#infoOut-removeFinishedTasksButton');
-            // removeFinished.addEventListener('click', function () {
-            //     var completedTasks = document.querySelectorAll('.completed');
-            //     for (var i = 0; i < completedTasks.length; i++) {
-            //         completedTasks[i].parentElement.removeChild(completedTasks[i]);
-            //     }
-            // })
+            var removeFinished = document.querySelector('#infoOut-removeFinishedTasksButton');
+            removeFinished.addEventListener('click', function () {
+                var completedTasks = document.querySelectorAll('.completed');
+                for (var i = 0; i < completedTasks.length; i++) {
+                    completedTasks[i].parentElement.removeChild(completedTasks[i]);
+                }
+            })
         }
-
-
     })
 })
