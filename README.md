@@ -8,5 +8,6 @@ User can mark the task if it's finished and remove all of them or specified one.
  - Sorting of the task list by date and priority
  - RWD of a layout
 
+[See the project here!](https://tomaszkiewiczanna.github.io/task-organiser/index)
 ![N|Solid](https://preview.ibb.co/kLf02U/dolis.png)
 
