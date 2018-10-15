@@ -84,41 +84,34 @@ document.addEventListener('DOMContentLoaded', ()=>{
     })
     taskListUl.addEventListener('click', (e)=>{
         if (e.target.classList.contains("deleteButton")){ //usuwanie zadania                                let indexDelete;
-            const parentLi = e.target.parentElement.id;
+            const parentLiID = e.target.parentElement.id;
             let indexDelete;
             taskArr.forEach((el, i) => {
-                if (el.taskKey === Number(parentLi)) {indexDelete = i}
+                if (el.taskKey === Number(parentLiID)) {indexDelete = i}
             });
             taskArr.splice(indexDelete, 1);
             e.target.parentElement.parentElement.removeChild(e.target.parentElement);
             refreshCounter();
             refreshList(taskArr);
+        } else if (e.target.classList.contains("completeButton")){ //status ukończenia zadania
+            let indexComp;
+            const parentLiID = e.target.parentElement.id;
+            taskArr.forEach((el, i) => {
+                if (el.taskKey === Number(parentLiID)) {indexComp = i;}
+            });
+            if (e.target.parentElement.classList.contains("completed")) {
+                e.target.parentElement.classList.remove('completed');
+                e.target.innerText = `complited`;
+                taskArr[indexComp].taskDone = false;
+            } else {
+                e.target.parentElement.classList.add('completed');
+                e.target.innerText = `not ready`;
+                taskArr[indexComp].taskDone = true;
+            }
+            refreshCounter();
         }
 
-        // //status ukończenia zadania
-        // const completeButton = taskListUl.querySelectorAll('.completeButton');
-        // completeButton.forEach(compBtn => {
-        //     compBtn.addEventListener('click', () => {
-        //         let indexComp;
-        //         const parentLi = compBtn.parentElement.id;
-        //         taskArr.forEach((el, i) => {
-        //             if (el.taskKey === Number(parentLi)) {
-        //                 indexComp = i;
-        //             }
-        //         });
-        //
-        //         if (compBtn.parentElement.className.indexOf("completed") === -1) {
-        //             compBtn.parentElement.classList.add('completed');
-        //             compBtn.innerText = `not ready`;
-        //             taskArr[indexComp].taskDone = true;
-        //         } else {
-        //             compBtn.parentElement.classList.remove('completed');
-        //             compBtn.innerText = `complited`;
-        //             taskArr[indexComp].taskDone = false;
-        //         }
-        //         refreshCounter();
-        //     })
-        // })
+
         //
         // //usuwanie zrobionych zadań
         // const removeFinished = document.getElementById('infoOut-removeFinishedTasksButton');
