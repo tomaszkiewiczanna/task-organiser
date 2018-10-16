@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', ()=> {
     const infoIn = document.querySelector('.infoIn');
     const addButton = document.querySelector('#infoIn-addTaskButton');
     let taskInput = document.querySelector('#infoIn-taskInput');
-    let dateInput = document.querySelector("#infoIn-taskDate").valueAsDate = new Date();
+    let dateInput = document.querySelector("#infoIn-taskDate");
     let priorityInput = document.querySelector("#infoIn-taskPriority");
     let taskArr = [];
     const sortBtnDate = document.querySelector(".sorting-date");
@@ -56,8 +56,8 @@ document.addEventListener('DOMContentLoaded', ()=> {
             const newTaskLi = document.createElement('li');
             newTaskLi.innerHTML = `
                     <span class="infoOut-taskList-li-square"></span><h1>${el.taskName}</h1><br>
-                    <p>until ${el.taskDate.getDate()} ${monthNames[el.taskDate.getMonth()]} 
-                    ${el.taskDate.getFullYear()}</p><button class="deleteButton">Delete</button>
+                    <p>until ${el.taskDate[2]} ${monthNames[Number(el.taskDate[1])-1]} 
+                    ${el.taskDate[0]}</p><button class="deleteButton">Delete</button>
                     <button class="completeButton">Completed</button>`;
             taskListUl.appendChild(newTaskLi);
             newTaskLi.id = el.taskKey;
@@ -79,19 +79,22 @@ document.addEventListener('DOMContentLoaded', ()=> {
         else {
             //obiekt zadania dodany do tablicy
             taskArr.push({
-                taskKey: dateInput.getTime(),
+                taskKey: new Date ().getTime(),
                 taskName: taskInput.value,
-                taskDate: dateInput,
+                taskDateForm: new Date (dateInput.value),
+                taskDate: dateInput.value.split("-"),
                 taskPriority: Number(priorityInput.value),
                 taskDone: false
             });
+            console.log(taskArr);
+
             refreshCounter();
             refreshList(taskArr);
 
             //reset formularza
             taskInput.value = "";
             priorityInput.value = "";
-            dateInput = new Date();
+            dateInput.value = "";
         }
     })
 
@@ -145,7 +148,7 @@ document.addEventListener('DOMContentLoaded', ()=> {
     //sortowanie po dacie
     sortBtnDate.addEventListener('click', ()=>{
         taskArr.sort(function(a,b){
-            return b.taskDate - a.taskDate;
+            return a.taskDateForm - b.taskDateForm;
         });
         refreshList(taskArr);
         refreshCounter();
