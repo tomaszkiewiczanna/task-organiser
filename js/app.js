@@ -1,15 +1,16 @@
-document.addEventListener('DOMContentLoaded', ()=>{
+document.addEventListener('DOMContentLoaded', ()=> {
     //zamienne
     const infoIn = document.querySelector('.infoIn');
     const addButton = document.querySelector('#infoIn-addTaskButton');
     let taskInput = document.querySelector('#infoIn-taskInput');
     let dateInput = document.querySelector("#infoIn-taskDate").valueAsDate = new Date();
     let priorityInput = document.querySelector("#infoIn-taskPriority");
-    const taskArr = [];
+    let taskArr = [];
 
     const infoOut = document.querySelector('.infoOut');
     const taskListUl = document.querySelector('#infoOut-taskList');
-
+    const removeFinished = document.querySelector('.removeFinishedTasksButton');
+    let finishedTasksArr = [];
 
     const monthNames = [
         "January", "February", "March",
@@ -21,13 +22,13 @@ document.addEventListener('DOMContentLoaded', ()=>{
         "#83A57A", "#8AA56B", "#AAD185", "#F2EAA7", "#F2F990",
         "#F2E098", "#f2d06b", "#EAB06E", "#ff7c35", "#ff4104"
     ];
-    let finishedTasksArr = [];
 
     //utworzenie licznik zadań
     const counterSpan = document.createElement("span");
     counterSpan.setAttribute('id', 'task-counter');
     infoOut.insertBefore(counterSpan, infoOut.firstChild);
     counterSpan.innerHTML = `You have <span id="task-counter-numb">0</span> tasks to make.`;
+    const counterNumb = document.querySelector('#task-counter-numb');
 
     //FUNKCJE
     function refreshCounter() {
@@ -37,13 +38,18 @@ document.addEventListener('DOMContentLoaded', ()=>{
                 finishedTasksArr.push(i);
             }
         });
-        document.querySelector('#task-counter-numb').innerHTML = taskArr.length - finishedTasksArr.length;
+        counterNumb.innerHTML = taskArr.length - finishedTasksArr.length;
+        if (finishedTasksArr.length > 0) {
+            removeFinished.style.display = 'block';
+        } else {
+            removeFinished.style.display = 'none';
+        }
     }
 
     // tworzenie li z tablicy zadań
     function refreshList(arr) {
         taskListUl.innerHTML = '';
-        arr.map(el => {
+        arr.forEach(el => {
             const newTaskLi = document.createElement('li');
             newTaskLi.innerHTML = `
                     <span class="infoOut-taskList-li-square"></span><h1>${el.taskName}</h1><br>
@@ -53,7 +59,10 @@ document.addEventListener('DOMContentLoaded', ()=>{
             taskListUl.appendChild(newTaskLi);
             newTaskLi.id = el.taskKey;
             newTaskLi.querySelector('.infoOut-taskList-li-square').style.background = colorsArr[el.taskPriority - 1];
-            if (el.taskDone) {newTaskLi.classList.add('completed')};
+            if (el.taskDone) {
+                newTaskLi.classList.add('completed')
+            }
+            ;
         })
     }
 
@@ -73,35 +82,41 @@ document.addEventListener('DOMContentLoaded', ()=>{
                 taskPriority: Number(priorityInput.value),
                 taskDone: false
             });
+            refreshCounter();
+            refreshList(taskArr);
 
             //reset formularza
             taskInput.value = "";
             priorityInput.value = "";
             dateInput = new Date();
-            refreshCounter();
-            refreshList(taskArr);
         }
     })
-    taskListUl.addEventListener('click', (e)=>{
-        if (e.target.classList.contains("deleteButton")){ //usuwanie zadania                                let indexDelete;
+
+    //obsługa buttonów w Ul
+    taskListUl.addEventListener('click', (e) => {
+        if (e.target.classList.contains("deleteButton")) { //usuwanie zadania                                let indexDelete;
             const parentLiID = e.target.parentElement.id;
             let indexDelete;
             taskArr.forEach((el, i) => {
-                if (el.taskKey === Number(parentLiID)) {indexDelete = i}
+                if (el.taskKey === Number(parentLiID)) {
+                    indexDelete = i
+                }
             });
             taskArr.splice(indexDelete, 1);
             e.target.parentElement.parentElement.removeChild(e.target.parentElement);
             refreshCounter();
             refreshList(taskArr);
-        } else if (e.target.classList.contains("completeButton")){ //status ukończenia zadania
+        } else if (e.target.classList.contains("completeButton")) { //status ukończenia zadania
             let indexComp;
             const parentLiID = e.target.parentElement.id;
             taskArr.forEach((el, i) => {
-                if (el.taskKey === Number(parentLiID)) {indexComp = i;}
+                if (el.taskKey === Number(parentLiID)) {
+                    indexComp = i;
+                }
             });
             if (e.target.parentElement.classList.contains("completed")) {
                 e.target.parentElement.classList.remove('completed');
-                e.target.innerText = `complited`;
+                e.target.innerText = `completed`;
                 taskArr[indexComp].taskDone = false;
             } else {
                 e.target.parentElement.classList.add('completed');
@@ -110,17 +125,17 @@ document.addEventListener('DOMContentLoaded', ()=>{
             }
             refreshCounter();
         }
-
-
-        //
-        // //usuwanie zrobionych zadań
-        // const removeFinished = document.getElementById('infoOut-removeFinishedTasksButton');
-        // removeFinished.style.display = "block";
-        // removeFinished.addEventListener('click', () => {
-        //     const completedTasks = document.querySelectorAll('.completed');
-        //     completedTasks.forEach(finishedLi => {
-        //         finishedLi.parentElement.removeChild(finishedLi);
-        //     })
-        // })
+    })
+    //usunięcie gotowych zadań
+    removeFinished.addEventListener('click', () => {
+        const notMadeArr = [];
+        taskArr.forEach(el => {
+            if (!el.taskDone) {
+                notMadeArr.push(el);
+            }
+        })
+        taskArr = notMadeArr;
+        refreshList(taskArr);
+        refreshCounter();
     })
 })

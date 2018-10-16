@@ -180,10 +180,10 @@ button:hover {
 }
 
 #infoIn-addTaskButton,
-#infoOut-removeFinishedTasksButton {
+.removeFinishedTasksButton {
     width: 95%;
 }
-#infoOut-removeFinishedTasksButton{
+.removeFinishedTasksButton{
     display: none;
 }
 
