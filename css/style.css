@@ -131,10 +131,20 @@ button:hover {
     color: #22634f;
 }
 
+.sorting {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 23px;
+}
+.sorting button {
+    width: 155px;
+    padding: 3px;
+}
+
 .infoOut {
     background: rgba(0, 0, 0, 0.5);
     border-radius: 5px;
-    margin: 10px;
+    margin: 0 10px 10px 10px;
     width: auto;
     height: 250px;
     text-align: center;

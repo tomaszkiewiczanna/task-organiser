@@ -6,6 +6,9 @@ document.addEventListener('DOMContentLoaded', ()=> {
     let dateInput = document.querySelector("#infoIn-taskDate").valueAsDate = new Date();
     let priorityInput = document.querySelector("#infoIn-taskPriority");
     let taskArr = [];
+    const sortBtnDate = document.querySelector(".sorting-date");
+    const sortBtnPriority = document.querySelector(".sorting-priority");
+
 
     const infoOut = document.querySelector('.infoOut');
     const taskListUl = document.querySelector('#infoOut-taskList');
@@ -135,6 +138,23 @@ document.addEventListener('DOMContentLoaded', ()=> {
             }
         })
         taskArr = notMadeArr;
+        refreshList(taskArr);
+        refreshCounter();
+    })
+
+    //sortowanie po dacie
+    sortBtnDate.addEventListener('click', ()=>{
+        taskArr.sort(function(a,b){
+            return b.taskDate - a.taskDate;
+        });
+        refreshList(taskArr);
+        refreshCounter();
+    })
+    //sortowanie po priorytecie
+    sortBtnPriority.addEventListener('click', ()=>{
+        taskArr.sort(function(a,b){
+            return b.taskPriority - a.taskPriority;
+        });
         refreshList(taskArr);
         refreshCounter();
     })
