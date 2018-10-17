@@ -63,7 +63,8 @@ document.addEventListener('DOMContentLoaded', ()=> {
             newTaskLi.id = el.taskKey;
             newTaskLi.querySelector('.infoOut-taskList-li-square').style.background = colorsArr[el.taskPriority - 1];
             if (el.taskDone) {
-                newTaskLi.classList.add('completed')
+                newTaskLi.classList.add('completed');
+                newTaskLi.querySelector('.completeButton').innerText = `not ready`;
             }
             ;
         })
