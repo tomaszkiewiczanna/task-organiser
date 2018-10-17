@@ -20,7 +20,19 @@
         <div class="infoIn">
             <input id="infoIn-taskInput" placeholder="What's your task?"><br>
             <input id="infoIn-taskDate" type="date">
-            <input id="infoIn-taskPriority" name="priority" type="number" placeholder="Priority (1-10)" min="1" max="10"><br>
+            <select id="infoIn-taskPriority" title="taskPriority" name="priority">
+                <option value="" disabled selected>Priority</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+            </select>
             <button id="infoIn-addTaskButton">Add task</button>
         </div>
         <div class="sorting">

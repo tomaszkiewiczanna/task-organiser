@@ -73,7 +73,7 @@ document.addEventListener('DOMContentLoaded', ()=> {
     addButton.addEventListener('click', () => {
         if (taskInput.value.length < 1 || taskInput.value.length >= 101) {
             alert('Task description must be between 1 - 100 letters!');
-        } else if (priorityInput.value === "") {
+        } else if (Number(priorityInput.value) === 0) {
             alert('Set the priority from 1 up to 10 ');
         }
         else {
